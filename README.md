@@ -23,7 +23,7 @@ $ q <file> # run file
 
 To use Q using the Python API:
 ```python
-from qlang import run, run_text
+from q import run, run_text
 
 run_text('<text>') # run text
 run('<file>') # run file
