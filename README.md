@@ -1,4 +1,6 @@
 # Q
+NOTE: This is work in progress
+
 A concise, procedural programming language.
 
 # Installation
