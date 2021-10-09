@@ -1,5 +1,7 @@
 # Q
-NOTE: This is work in progress
+[![PyPI version](https://badge.fury.io/py/qlang.svg)](https://badge.fury.io/py/qlang)
+
+NOTICE: This is work in progress
 
 A concise, procedural programming language.
 
