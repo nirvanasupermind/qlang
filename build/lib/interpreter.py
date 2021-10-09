@@ -12,8 +12,8 @@ class Interpreter:
             return self.visit_number_node(node, symbol_table)
         elif node[0] == 'string':
             return self.visit_string_node(node, symbol_table)
-        elif node[0] == 'pound':
-            return self.visit_pound_node(node, symbol_table)
+        elif node[0] == 'at':
+            return self.visit_at_node(node, symbol_table)
         elif node[0] == 'name':
             return self.visit_name_node(node, symbol_table)    
         elif node[0] == 'add':
@@ -66,7 +66,7 @@ class Interpreter:
             raise Exception(f'Unknown node type')
 
     def visit_empty_node(self, node, symbol_table):
-        return Pound()
+        return At()
 
     def visit_number_node(self, node, symbol_table):
         return Number(node[1])
@@ -74,8 +74,8 @@ class Interpreter:
     def visit_string_node(self, node, symbol_table):
         return String(node[1])
 
-    def visit_pound_node(self, node, symbol_table):
-        return Pound()
+    def visit_at_node(self, node, symbol_table):
+        return At()
 
     def visit_name_node(self, node, symbol_table):
         name = node[1]

@@ -30,3 +30,11 @@ from q import run, run_text
 run_text('<text>') # run text
 run('<file>') # run file
 ```
+
+
+# Example program
+
+## Factorial
+```java
+F={$0>1?$0*F($0-1):1}
+```

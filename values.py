@@ -3,61 +3,62 @@ import math
 from error import Error
 from dataclasses import dataclass
 
-class Value:
-    value: float
-    
-    def __add__(self, other):
+class Value:    
+    def add(self, other):
         self.illegal_operation()
 
-    def __sub__(self, other):
+    def subtract(self, other):
         self.illegal_operation()
 
-    def __mul__(self, other):
+    def multiply(self, other):
         self.illegal_operation()
 
-    def __truediv__(self, other):
+    def divide(self, other):
         self.illegal_operation()
 
-    def __mod__(self, other):
+    def mod(self, other):
         self.illegal_operation()
 
-    def __eq__(self, other):
+    def eq(self, other):
         self.illegal_operation()
 
-    def __ne__(self, other):
+    def ne(self, other):
         self.illegal_operation()
 
-    def __lt__(self, other):
+    def lt(self, other):
         self.illegal_operation()
 
-    def __gt__(self, other):
+    def gt(self, other):
         self.illegal_operation()
 
-    def __le__(self, other):
+    def le(self, other):
         self.illegal_operation()
 
-    def __ge__(self, other):
+    def ge(self, other):
         self.illegal_operation()
 
-    def __and__(self, other):
+    def and_(self, other):
         self.illegal_operation()
 
-    def __or__(self, other):
+    def or_(self, other):
         self.illegal_operation()
 
-    def __xor__(self, other):
+    def xor(self, other):
         self.illegal_operation()
 
-    def __not__(self):
-        self.illegal_operation()
-
-    def __invert__(self):
-        self.illegal_operation()
-
-    def __pos__(self):
+    def plus(self):
         self.illegal_operation()        
 
-    def __neg__(self):
+    def minus(self):
+        self.illegal_operation()
+
+    def not_(self):
+        self.illegal_operation()
+
+    def invert(self):
+        self.illegal_operation()
+
+    def pound(self):
         self.illegal_operation()
 
     def illegal_operation(self):
@@ -70,101 +71,101 @@ class Value:
 class Number(Value):
     value: float
     
-    def __add__(self, other):
+    def add(self, other):
         if isinstance(other, Number):
             return Number(self.value + other.value)
         else:
             self.illegal_operation()
 
-    def __sub__(self, other):
+    def subtract(self, other):
         if isinstance(other, Number):
             return Number(self.value - other.value)
         else:
             self.illegal_operation()
 
-    def __mul__(self, other):
+    def multiply(self, other):
         if isinstance(other, Number):
             return Number(self.value * other.value)
         else:
             self.illegal_operation()
 
-    def __truediv__(self, other):
+    def divide(self, other):
         if isinstance(other, Number):
             return Number(self.value / other.value)
         else:
             self.illegal_operation()
 
-    def __mod__(self, other):
+    def mod(self, other):
         if isinstance(other, Number):
             return Number(self.value % other.value)
         else:
             self.illegal_operation()
 
-    def __eq__(self, other):
+    def eq(self, other):
         if isinstance(other, Number):
             return Number(float(self.value == other.value))
         else:
             return Number(0.0)
 
-    def __ne__(self, other):
+    def ne(self, other):
         if isinstance(other, Number):
             return Number(float(self.value != other.value))
         else:
             return Number(1.0)
 
-    def __lt__(self, other):
+    def lt(self, other):
         if isinstance(other, Number):
             return Number(float(self.value < other.value))
         else:
             return self.illegal_operation()
 
-    def __gt__(self, other):
+    def gt(self, other):
         if isinstance(other, Number):
             return Number(float(self.value > other.value))
         else:
             return self.illegal_operation()
 
-    def __le__(self, other):
+    def le(self, other):
         if isinstance(other, Number):
             return Number(float(self.value <= other.value))
         else:
             return self.illegal_operation()
 
-    def __ge__(self, other):
+    def ge(self, other):
         if isinstance(other, Number):
             return Number(float(self.value >= other.value))
         else:
             return self.illegal_operation()
 
-    def __and__(self, other):
+    def and_(self, other):
         if isinstance(other, Number):
             return Number(float(bool(self.value) and bool(other.value)))
         else:
             return self.illegal_operation()
 
-    def __or__(self, other):
+    def or_(self, other):
         if isinstance(other, Number):
             return Number(float(bool(self.value) or bool(other.value)))
         else:
             return self.illegal_operation()
 
-    def __xor__(self, other):
+    def xor(self, other):
         if isinstance(other, Number):
             return Number(float(bool(self.value) != bool(other.value)))
         else:
             return self.illegal_operation()
 
+    def plus(self):
+        return Number(+self.value)
+
+    def minus(self):
+        return Number(-self.value)    
+
     def not_(self):
         return Number(float(not bool(self.value)))
 
-    def __invert__(self):
+    def invert(self):
         return Number(float(~math.floor(self.value)))
-
-    def __pos__(self):
-        return Number(+self.value)
-
-    def __neg__(self):
-        return Number(-self.value)    
 
     def __repr__(self):
         return f'{self.value}'
@@ -173,42 +174,44 @@ class Number(Value):
 class String(Value):
     value: str
     
-    def __add__(self, other):
+    def add(self, other):
         if isinstance(other, String):
             return String(self.value + other.value)
         else:
             self.illegal_operation()
 
-    def __eq__(self, other):
+    def eq(self, other):
         if isinstance(other, String):
             return Number(float(self.value == other.value))
         else:
             return Number(0.0)
 
-    def __ne__(self, other):
+    def ne(self, other):
         if isinstance(other, String):
             return Number(float(self.value != other.value))
         else:
-            return Number(1.0)        
+            return Number(1.0)  
+                 
+    def pound(self):
+        return Number(float(len(self.value)))
 
     def __repr__(self):
         return f'{self.value}'
            
 @dataclass
-class Pound(Value):
-    def __eq__(self, other):
-        return Number(float(isinstance(other, Pound)))
+class At(Value):
+    def eq(self, other):
+        return Number(float(isinstance(other, At)))
 
-    def __ne__(self, other):
-        return Number(float(not isinstance(other, Pound)))
+    def ne(self, other):
+        return Number(float(not isinstance(other, At)))
 
     def __repr__(self):
-        return '#'
-
+        return '@'
+        
 @dataclass
 class Func(Value):
     func: any
 
     def __repr__(self):
         return '<function>'
-    
