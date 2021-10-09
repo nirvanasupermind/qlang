@@ -10,7 +10,7 @@ To install Q from pip, use the command:
 $ pip install qlang
 ```
 
-If you want to be able to use q from a shell script, navigate to the directory where Q is installed and create a symbolic link:
+If you want to use Q from a shell script, navigate to the directory where Q is installed and create a symbolic link:
 
 ```
 ln -s ./cli.py q
