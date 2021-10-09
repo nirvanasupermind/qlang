@@ -218,9 +218,9 @@ class Parser:
             self.advance()
             return ('string', token[1])
 
-        elif token[0] == 'pound':
+        elif token[0] == 'at':
             self.advance()
-            return ('pound',)
+            return ('at',)
 
         elif token[0] == 'name':
             self.advance()
@@ -241,5 +241,9 @@ class Parser:
         elif token[0] == 'invert':
             self.advance()
             return ('invert', self.factor())
+
+        elif token[0] == 'pound':
+            self.advance()
+            return ('pound', self.factor())
 
         self.raise_error()

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='qlang',
-    version='0.0.4',
+    version='0.1.0',
     author='nirvanasupermind',
     author_email='nirvana.supermind@gmail.com',
     url='https://github.com/nirvanasupermind/qlang',

@@ -52,6 +52,8 @@ class Interpreter:
             return self.visit_not_node(node, symbol_table)
         elif node[0] == 'invert':
             return self.visit_invert_node(node, symbol_table)
+        elif node[0] == 'pound':
+            return self.visit_pound_node(node, symbol_table)
         elif node[0] == 'assign':
             return self.visit_assign_node(node, symbol_table)    
         elif node[0] == 'ternary':
@@ -88,61 +90,64 @@ class Interpreter:
         return result
 
     def visit_add_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) + self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).add(self.visit(node[2], symbol_table))
     
     def visit_subtract_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) - self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).subtract(self.visit(node[2], symbol_table))
 
     def visit_multiply_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) * self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).multiply(self.visit(node[2], symbol_table))
 
     def visit_divide_node(self, node, symbol_table):
         try:
-            return self.visit(node[1], symbol_table) / self.visit(node[2], symbol_table)
+            return self.visit(node[1], symbol_table).divide(self.visit(node[2], symbol_table))
         except ZeroDivisionError:
             return Number(math.inf)
 
     def visit_mod_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) % self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).mod(self.visit(node[2], symbol_table))
 
     def visit_ee_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) == self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).eq(self.visit(node[2], symbol_table))
 
     def visit_ne_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) != self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).ne(self.visit(node[2], symbol_table))
 
     def visit_lt_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) < self.visit(node[2], symbol_table)
-
-    def visit_le_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) <= self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).lt(self.visit(node[2], symbol_table))
 
     def visit_gt_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) > self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).gt(self.visit(node[2], symbol_table))
+
+    def visit_le_node(self, node, symbol_table):
+        return self.visit(node[1], symbol_table).le(self.visit(node[2], symbol_table))
 
     def visit_ge_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) >= self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).ge(self.visit(node[2], symbol_table))
 
     def visit_and_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) & self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).and_(self.visit(node[2], symbol_table))
 
     def visit_or_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) | self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).or_(self.visit(node[2], symbol_table))
 
     def visit_xor_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table) ^ self.visit(node[2], symbol_table)
+        return self.visit(node[1], symbol_table).xor_(self.visit(node[2], symbol_table))
         
     def visit_plus_node(self, node, symbol_table):
-        return +self.visit(node[1], symbol_table)
+        return self.visit(node[1], symbol_table).plus()
 
     def visit_minus_node(self, node, symbol_table):
-        return -self.visit(node[1], symbol_table)
+        return self.visit(node[1], symbol_table).minus()
 
     def visit_not_node(self, node, symbol_table):
         return self.visit(node[1], symbol_table).not_()
 
     def visit_invert_node(self, node, symbol_table):
-        return ~self.visit(node[1], symbol_table)
+        return self.visit(node[1], symbol_table).invert()
+
+    def visit_pound_node(self, node, symbol_table):
+        return self.visit(node[1], symbol_table).pound()
 
     def visit_assign_node(self, node, symbol_table):
         if node[1][0] != 'name':

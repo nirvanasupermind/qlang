@@ -78,7 +78,10 @@ class Lexer:
                 tokens.append(('comma',))  
             elif self.current_char == '#':
                 self.advance()
-                tokens.append(('pound',))                              
+                tokens.append(('pound',)) 
+            elif self.current_char == '@':
+                self.advance()
+                tokens.append(('at',))                              
             elif self.current_char == '(':
                 self.advance()
                 tokens.append(('lparen',))
