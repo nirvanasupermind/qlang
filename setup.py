@@ -14,6 +14,6 @@ setup(
     packages=['.'],
     description='A concise, procedural programming language',
     long_description=long_description,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
     install_requires=[]
 )
