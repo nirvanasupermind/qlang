@@ -197,7 +197,35 @@ class String(Value):
 
     def __repr__(self):
         return f'{self.value}'
-           
+
+@dataclass
+class Tuple(Value):
+    value: tuple
+
+    def add(self, other):
+        if isinstance(other, Tuple):
+            return Tuple(self.value + other.value)
+        else:
+            self.illegal_operation()
+
+    def eq(self, other):
+        if isinstance(other, Tuple):
+            return Number(float(self.value == other.value))
+        else:
+            return Number(0.0)
+    
+    def ne(self, other):
+        if isinstance(other, Tuple):
+            return Number(float(self.value != other.value))
+        else:
+            return Number(1.0)
+
+    def pound(self):
+        return Number(float(len(self.value)))
+
+    def __repr__(self):
+        return f'{self.value}'
+
 @dataclass
 class At(Value):
     def eq(self, other):

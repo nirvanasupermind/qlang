@@ -12,6 +12,8 @@ class Interpreter:
             return self.visit_number_node(node, symbol_table)
         elif node[0] == 'string':
             return self.visit_string_node(node, symbol_table)
+        elif node[0] == 'tuple':
+            return self.visit_tuple_node(node, symbol_table)
         elif node[0] == 'at':
             return self.visit_at_node(node, symbol_table)
         elif node[0] == 'name':
@@ -76,6 +78,13 @@ class Interpreter:
     def visit_string_node(self, node, symbol_table):
         return String(node[1])
 
+    def visit_tuple_node(self, node, symbol_table):
+        elements = []
+        for element_node in node[1]:
+            elements.append(self.visit(element_node, symbol_table))
+
+        return Tuple(tuple(elements))
+
     def visit_at_node(self, node, symbol_table):
         return At()
 
@@ -132,7 +141,7 @@ class Interpreter:
         return self.visit(node[1], symbol_table).or_(self.visit(node[2], symbol_table))
 
     def visit_xor_node(self, node, symbol_table):
-        return self.visit(node[1], symbol_table).xor_(self.visit(node[2], symbol_table))
+        return self.visit(node[1], symbol_table).xor(self.visit(node[2], symbol_table))
         
     def visit_plus_node(self, node, symbol_table):
         return self.visit(node[1], symbol_table).plus()
@@ -184,6 +193,10 @@ class Interpreter:
 
     def visit_call_node(self, node, symbol_table):
         func = self.visit(node[1], symbol_table)
+
+        if not isinstance(func, Func):
+            raise Error(f'{func} is not callable')
+
         args = []
 
         for arg_node in node[2]:

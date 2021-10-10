@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='qlang',
-    version='0.1.3',
+    version='0.1.4',
     author='nirvanasupermind',
     author_email='nirvana.supermind@gmail.com',
     url='https://github.com/nirvanasupermind/qlang',

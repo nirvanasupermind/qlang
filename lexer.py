@@ -2,7 +2,7 @@ import string
 
 from error import Error
 
-WHITESPACE = ' \t'
+WHITESPACE = ' \n\t'
 LETTERS = string.ascii_letters + '_$'
 DIGITS = '0123456789'
 
@@ -23,9 +23,9 @@ class Lexer:
         while self.current_char != None:
             if self.current_char in WHITESPACE:
                 self.advance()
-            elif self.current_char == ';' or self.current_char == '\n':
+            elif self.current_char == ';':
                 self.advance()
-                tokens.append(('newline',))
+                tokens.append(('semicolon',))
             elif self.current_char == '.' or self.current_char in DIGITS:
                 tokens.append(self.get_number())
             elif self.current_char in LETTERS:

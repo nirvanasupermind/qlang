@@ -31,7 +31,7 @@ class Parser:
         statement = self.expr()
         statements.append(statement)
 
-        while self.current_token[0] != 'eof' and self.current_token[0] == 'newline':
+        while self.current_token[0] != 'eof' and self.current_token[0] == 'semicolon':
             self.advance()
             statements.append(self.expr())
 
@@ -183,7 +183,7 @@ class Parser:
 
             if self.current_token[0] == 'rparen':
                 self.advance()
-                return ('call', factor, ())
+                factor = ('call', factor, ())
             else:
                 arg_nodes.append(self.expr())
 
@@ -202,9 +202,32 @@ class Parser:
 
         if token[0] == 'lparen':
             self.advance()
+
+            if self.current_token[0] == 'rparen':
+                self.advance()
+                return ('tuple', [])
+
             result = self.expr()
 
-            if self.current_token[0] != 'rparen':
+            if self.current_token[0] == 'comma':
+                element_nodes = [result]
+
+                self.advance()
+
+                if self.current_token[0] == 'rparen':
+                    self.advance()
+                    return ('tuple', element_nodes)
+
+                element_nodes.append(self.expr())
+
+                while self.current_token[0] == 'comma':
+                    self.advance()
+                    element_nodes.append(self.expr())
+
+                self.advance()
+
+                return ('tuple', element_nodes)
+            elif self.current_token[0] != 'rparen':
                 self.raise_error()
             
             self.advance()
